@@ -24,6 +24,8 @@ class cls_use_case_find_movie
 
     public function execute($id)
     {
-        return $this->de_entidade_para_dto($this->resource_movies->find($id));
+        return $this->de_entidade_para_dto(
+            $this->resource_movies->find($id)
+        );
     }
 }

@@ -37,21 +37,23 @@ class cls_resource_movies implements int_resource_movies{
     }
 
     public function list(array $filter=[]):array{
-        $rowsData = $this->model->orderBy('id')->get();
+        $rowsData = $this->model->orderBy('id')->get(); //SELECT * FROM movies ORDER BY id
         return $this->modelo_para_entidades($rowsData);
     }
 
     public function find($id): ?int_entidade {
         $rowData = $this->model->find($id);
+        // $rowData = $this->model->where('id', $id)->first();
+
         return $this->modelo_para_entidade($rowData);
     }
 
     public function create(int_entidade $entidade): ?int_entidade {
         $newMovie = $this->model->create([
-            'title' => $entidade->title(),
-            'genre' => $entidade->genre(),
-            'year' => $entidade->year(),
-            'rating' => $entidade->rating()
+                                            'title' => $entidade->title(),
+                                            'genre' => $entidade->genre(),
+                                            'year' => $entidade->year(),
+                                            'rating' => $entidade->rating()
         ]);
         return $this->modelo_para_entidade($newMovie);
     }

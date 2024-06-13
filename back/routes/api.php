@@ -20,4 +20,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('movies', MoviesController::class);
+// Route::apiResource('movies', MoviesController::class); //get, post, put, delete
+
+Route::get('movies', [MoviesController::class, 'index']);
+Route::get('movies/{id}', [MoviesController::class, 'show'])->where('id', '[0-9]+');
+Route::post('movies', [MoviesController::class, 'store']);
+Route::put('movies/{id}', [MoviesController::class, 'update']);
+Route::delete('movies/{id}', [MoviesController::class, 'destroy']);

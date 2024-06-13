@@ -16,7 +16,7 @@ class cls_use_case_new_movie
     public function de_dto_para_entidade(dto_new_movie_in $dtoin): cls_movies
     {
         return new cls_movies(
-            id: 1,
+            id: 0,
             title: $dtoin->title,
             genre:$dtoin->genre,
             year: $dtoin->year,

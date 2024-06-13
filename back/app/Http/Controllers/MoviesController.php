@@ -37,9 +37,11 @@ class MoviesController extends Controller
     public function index(Request $request)
     {
         //
-        // $movies = \App\Models\Movies::all();
+        // $movies = \App\Models\Movies::all(); // SELECT * FROM movies
         // return response()->json($movies, 200);
-        return response()->json($this->use_case_list->execute(), 200);
+        return response()->json(
+            $this->use_case_list->execute()
+        , 200);
     }
 
     /**
@@ -55,7 +57,7 @@ class MoviesController extends Controller
                 $request->year,
                 $request->rating
             );
-            $dtoout=$this->use_case_new->execute($dtoin);
+            $dtoout = $this->use_case_new->execute($dtoin);
             return response()->json($dtoout, 201);
         }catch(\Exception $e){
             return response()->json(['error' => $e->getMessage()], 400);
@@ -70,7 +72,9 @@ class MoviesController extends Controller
         //
         try{
             // return \App\Models\Movies::find($id);
-            return response()->json($this->use_case_find->execute($id), 200);
+            return response()->json(
+                $this->use_case_find->execute($id)
+            , 200);
         } catch(\Exception $e){
             return response()->json(['error' => $e->getMessage()], 400);
         }

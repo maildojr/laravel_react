@@ -28,6 +28,8 @@ class cls_use_case_list_movies
 
     public function execute(array $filter = [])
     {
-        return $this->de_entidade_para_dto($this->resource_movies->list($filter));
+        return $this->de_entidade_para_dto(
+            $this->resource_movies->list($filter)
+        );
     }
 }
