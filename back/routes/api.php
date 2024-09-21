@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\MoviesController;
+use App\Http\Controllers\ActorsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +23,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 // Route::apiResource('movies', MoviesController::class); //get, post, put, delete
 
+// *** MOVIES ***
 Route::get('movies', [MoviesController::class, 'index']);
 Route::get('movies/{id}', [MoviesController::class, 'show'])->where('id', '[0-9]+');
 Route::post('movies', [MoviesController::class, 'store']);
 Route::put('movies/{id}', [MoviesController::class, 'update']);
 Route::delete('movies/{id}', [MoviesController::class, 'destroy']);
+
+// *** ACTORS ***
+Route::get('actors', [ActorsController::class, 'index'])->name('actors.index');

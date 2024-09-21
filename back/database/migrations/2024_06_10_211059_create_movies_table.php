@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('genre');
             $table->integer('year');
             $table->float('rating');
+            $table->integer('tmdb_id')->nullable();
             $table->timestamps();
         });
     }

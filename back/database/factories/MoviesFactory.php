@@ -25,6 +25,7 @@ class MoviesFactory extends Factory
             'genre' => $faker->movieGenre,
             'description' => $faker->overview,
             'release_year' => $faker->year,
+            'tmdb_id' => $faker->tmdbId
         ];
     }
 }

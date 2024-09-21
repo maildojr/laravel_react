@@ -4,10 +4,13 @@ namespace App\core\infra\laravel\resources;
 
 use App\core\base\interface\int_entidade;
 use App\core\movies\entity\cls_movies;
+use App\core\actors\entity\cls_actors;
 use App\core\movies\resource\interface\int_resource_movies;
 use App\Models\Movies;
 
 class cls_resource_movies implements int_resource_movies{
+
+    protected $tmdbService;
     public function __construct(private Movies $model){
     }
 
@@ -15,12 +18,25 @@ class cls_resource_movies implements int_resource_movies{
         $out=[];
 
         foreach($rowsData as $row){
+
+            $actors = [];
+            foreach($row->actors as $actor){
+                array_push($actors, new cls_actors(
+                    $actor->id,
+                    $actor->name,
+                    $actor->birth,
+                    $actor->country
+                ));
+            }
+
             array_push($out, new cls_movies(
                 $row->id,
                 $row->title,
                 $row->genre,
                 $row->year,
-                $row->rating
+                $row->rating,
+                $actors,
+                $row->tmdb_id
             ));
         }
         return $out;
@@ -32,7 +48,8 @@ class cls_resource_movies implements int_resource_movies{
             title:$rowData->title,
             genre:$rowData->genre,
             year:$rowData->year,
-            rating:$rowData->rating
+            rating:$rowData->rating,
+            tmdb_id:$rowData->tmdb_id
         );
     }
 
@@ -65,6 +82,11 @@ class cls_resource_movies implements int_resource_movies{
             'year' => $entidade->year(),
             'rating' => $entidade->rating()
         ]);
+
+        if ($entidade->actors()) {
+            $this->model->find($entidade->id())->actors()->sync($entidade->actors());
+        }
+
         return $entidade;
     }
 

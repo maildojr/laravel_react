@@ -24,4 +24,10 @@ class Movies extends Model
         'year',
         'rating'
     ];
+
+    // relationships
+    public function actors()
+    {
+        return $this->belongsToMany(Actors::class, 'tb_movie_actor', 'movie_id', 'actor_id');
+    }
 }
