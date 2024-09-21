@@ -1,0 +1,53 @@
+version: "3.9"
+services:
+  app_front:
+    build:
+      context: ./front/app
+      dockerfile: Dockerfile
+    image: 'app_front'
+    user: "node"
+    working_dir: /usr/src/app
+    container_name: app_front
+    volumes:
+      - ./front/app:/usr/src/app
+    ports:
+      - 3000:3000
+    networks:
+      - app_network
+  app_back:
+    build:
+      context: ./back
+      dockerfile: Dockerfile
+    image: 'app_back'
+    working_dir: /var/www/html
+    container_name: app_back
+    volumes:
+      - ./back:/var/www/html
+    ports:
+      - 8000:80
+      - 5443:443
+    networks:
+      - app_network
+  app_mysql:
+    build: ./mysql/.docker
+    image: 'app_mysql'
+    container_name: app_mysql
+    ports:
+      - 3306:3306
+    command: '--default-authentication-plugin=mysql_native_password'
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 'root'
+      MYSQL_DATABASE: 'db_app'
+      MYSQL_USER: 'app'
+      MYSQL_PASSWORD: 'app'
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    volumes:
+      - './mysql/.docker/var/lib/mysql:/var/lib/mysql'
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
