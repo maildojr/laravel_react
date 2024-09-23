@@ -6,9 +6,9 @@ import ThemeToggle from './ThemeToggle';
 const AppAppBar = () => {
   return (
     <AppBar position="static">
-      <Toolbar>
+      <Toolbar sx={{ padding: 0 }}>
         <Typography variant="h6" sx={{ flexGrow: 1 }}>
-          MyApp
+          Movies & TV Shows 
         </Typography>
         <Button color="inherit" component={Link} to="/movies">Movies</Button>
         <Button color="inherit" component={Link} to="/tvshows">TV Shows</Button>
